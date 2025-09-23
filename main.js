@@ -1,28 +1,29 @@
 import "buffer"
 import { Buffer } from "buffer"
 import { GmeFile } from "gmelib"
+
+const audioTemplate = document.getElementById("audios-template")
+const binaryTemplate = document.getElementById("binaries-template")
+
 let reader = new FileReader()
 
 let gmefile = null
+let filename = "newFile.gme"
 
-const newfile = () => {
-    alert("hi")
-}
 
-// todo: audio upload| file download | binaries up donw load
+// todo: audio upload | binaries up donw load switch gen | download gme
 
 document.getElementById("inputfile").addEventListener("change", (e) => {
+    filename = e.target.files[0].name
     reader.readAsArrayBuffer(e.target.files[0])
 })
 
 const changeProductId = (e) => {
     const productId = document.getElementById("product-id").value
-    console.log(productId)
     gmefile.changeProductId(productId)
 }
 
 const clickAudio = (e) => {
-    console.log("click ich bin ", e)
     playAudio(gmefile.extractAudioFile(e.number))
 }
 
@@ -31,48 +32,40 @@ const replaceAudio = (e) => {
 }
 
 const downloadAudio = (e) => {
-    const blob = new Blob([gmefile.extractAudioFile(e.number)]);
+    downloadFile(`audio_${e.number}`, gmefile.extractAudioFile(e.number))
+}
+
+const downloadFile = (filename, buffer) => {
+    const blob = new Blob([buffer]);
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `audio_${e.number}`; // Set the file name for the download
-    document.body.appendChild(a); // Append the anchor to the DOM
-    a.click(); // Trigger the download
-    document.body.removeChild(a); // Remove the anchor after download
-    
-    // Revoke the object URL to free memory
+    a.download = filename; 
+    document.body.appendChild(a); 
+    a.click(); 
+    document.body.removeChild(a); 
     URL.revokeObjectURL(url);
 }
-const audioTemplate = document.getElementById("audios-template")
-const binaryTemplate = document.getElementById("binaries-template")
 
 const generateAudioElement = (e) => {
     const clone = audioTemplate.content.cloneNode(true)
-    // const button = clone.querySelector("[data-id=buttontest]")
-    const div = clone.querySelector('[data-id=buttontestdiv]')
-    const playBtn = clone.querySelector('[data-id=play-button]')
-    playBtn.onclick = clickAudio.bind(null, e)
-    const downloadBtn = clone.querySelector('[data-id=btn-download]')
-    downloadBtn.onclick = downloadAudio.bind(null, e)
-    const teext = clone.querySelector('[data-id="audios-text"]')
     
-    teext.innerText = e.number
+    clone.querySelector("[data-id=btn-play").onclick = clickAudio.bind(null, e)
+    clone.querySelector("[data-id=btn-download]").onclick = downloadAudio.bind(null, e)
+    clone.querySelector("[data-id=audios-text]").innerText = e.number
     
+    const div = clone.querySelector("[data-id=buttontestdiv]")
     document.getElementById("audios").appendChild(div)
 
 }
 
 const generateBinaryElement = (e) => {
-    console.log(e)
     const clone = binaryTemplate.content.cloneNode(true)
-    const div = clone.querySelector("[data-id=binary-div]")
+    
     clone.querySelector("[data-id=binary-name]").innerText = e.filename
+    
+    const div = clone.querySelector("[data-id=binary-div]")
     document.getElementById("binaries").appendChild(div)
-    // const div = document.createElement("div")
-    // div.className = "binary-element"
-    // div.innerText = `Binary: ${e.filename}`
-    // // div.onclick 
-    // document.getElementById("binaries").appendChild(div)
 }
 
 reader.onloadend = (e) => {
@@ -95,7 +88,7 @@ const playAudio = (filebuffer) => {
 };
 
 const downloadGME = () => {
-    alert(1)
+    downloadFile(`edited${filename}`, gmefile.gmeFileBuffer)
 }
 
 document.getElementById("product-id").onchange = changeProductId

@@ -40,17 +40,22 @@
         <div id="audios" class="scrollable-list audios overflow-auto space-y-2">
           <template id="audios-template">
 
-            <div data-id="buttontestdiv" class="audio-element flex items-center justify-between gap-3 p-2 rounded-md hover:bg-emerald-50">
+            <div data-id="buttontestdiv"
+              class="audio-element flex items-center justify-between gap-3 p-2 rounded-md hover:bg-emerald-50">
               <div class="flex items-center gap-3 flex-1 min-w-0">
-                <button data-id="play-button" class="flex-none aspect-square px-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" aria-label="Play">
-                  ▶
-                </button>
-                <p data-id="audios-text" class="text-emerald-700 truncate">Play</p>
+                <button data-id="btn-play"
+                  class="flex-none aspect-square px-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  aria-label="Play">▶</button>
+                <p data-id="audios-text" class="text-emerald-700 truncate"></p>
               </div>
 
               <div class="flex items-center gap-2">
-                <button class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300" data-id="btn-replace">Replace</button>
-                <button class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" data-id="btn-download">Download</button>
+                <button
+                  class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  data-id="btn-replace">Replace</button>
+                <button
+                  class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  data-id="btn-download">Download</button>
               </div>
             </div>
 
@@ -59,17 +64,28 @@
       </div>
 
       <div class="bg-emerald-100/75 rounded-lg p-4">
-        <h2 class="font-semibold text-lg text-emerald-700 mb-2">Binaries</h2>
+        <div class="flex m-2">
+          <h2 class="font-semibold text-lg text-emerald-700 mb-2">Binaries</h2>
+          <select name="processor-generation" id="processor-generation"
+            class="ml-auto bg-emerald-600 rounded-md text-white px-2">
+            <option value="1">3201</option>
+            <option value="2n">3202N</option>
+            <option value="3l" selected>3203L</option>
+          </select>
+        </div>
         <div id="binaries" class="scrollable-list binaries overflow-auto space-y-2">
           <template id="binaries-template">
 
-            <div data-id="binary-div" class="binary-element flex items-center justify-between gap-3 rounded-md hover:bg-emerald-50">
+            <div data-id="binary-div"
+              class="binary-element flex items-center justify-between gap-3 rounded-md hover:bg-emerald-50">
               <div class="flex-1 min-w-0">
                 <p data-id="binary-name" class="text-emerald-700 truncate"></p>
               </div>
               <div class="flex items-center gap-2">
-                <button data-id="bin-replace" class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300">Replace</button>
-                <button data-id="bin-download" class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">Download</button>
+                <button data-id="bin-replace"
+                  class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300">Replace</button>
+                <button data-id="bin-download"
+                  class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">Download</button>
               </div>
             </div>
           </template>
