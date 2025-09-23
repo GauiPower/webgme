@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.audio-element, .binary-element {
+  @apply border border-emerald-500 rounded-xl p-1
+} 

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>webgme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="bg-emerald-700 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+      <div class="flex-1">
+        <h1 class="text-3xl font-semibold">webgme</h1>
+        <p id="display" class="text-emerald-100/90 mt-1 text-sm">Please Choose a .gme file</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <label for="product-id" class="sr-only">Product Id</label>
+        <input type="number" max="999" name="product-id" id="product-id" placeholder="Product Id"
+          class="w-32 px-3 py-2 bg-white bg-opacity-90 text-black border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-900/70 transition" />
+
+        <!-- <button onclick="newfile" class="px-3 py-2 bg-emerald-900/70 hover:bg-emerald-900 rounded-md text-sm">New
+          File</button> -->
+        <label for="inputfile"
+          class="px-3 py-2 bg-emerald-900/70 hover:bg-emerald-900 rounded-md text-sm cursor-pointer">Choose File</label>
+        <input type="file" id="inputfile" class="sr-only" />
+        <button id="download-gme"
+          class="px-3 py-2 bg-white text-emerald-700 rounded-md hover:bg-emerald-50 text-sm">Download GME</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="bg-emerald-100/75 rounded-lg p-4">
+        <h2 class="font-semibold text-lg text-emerald-700 mb-2">Audios</h2>
+        <div id="audios" class="scrollable-list audios overflow-auto space-y-2">
+          <template id="audios-template">
+
+            <div data-id="buttontestdiv" class="audio-element flex items-center justify-between gap-3 p-2 rounded-md hover:bg-emerald-50">
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <button data-id="play-button" class="flex-none aspect-square px-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" aria-label="Play">
+                  ▶
+                </button>
+                <p data-id="audios-text" class="text-emerald-700 truncate">Play</p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300" data-id="btn-replace">Replace</button>
+                <button class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" data-id="btn-download">Download</button>
+              </div>
+            </div>
+
+          </template>
+        </div>
+      </div>
+
+      <div class="bg-emerald-100/75 rounded-lg p-4">
+        <h2 class="font-semibold text-lg text-emerald-700 mb-2">Binaries</h2>
+        <div id="binaries" class="scrollable-list binaries overflow-auto space-y-2">
+          <template id="binaries-template">
+
+            <div data-id="binary-div" class="binary-element flex items-center justify-between gap-3 rounded-md hover:bg-emerald-50">
+              <div class="flex-1 min-w-0">
+                <p data-id="binary-name" class="text-emerald-700 truncate"></p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button data-id="bin-replace" class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300">Replace</button>
+                <button data-id="bin-download" class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">Download</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <div class="bg-emerald-100/75 rounded-lg  p-4">
+        <h2 class="font-semibold text-lg text-emerald-700 mb-2">Scripts / Main</h2>
+        <div id="main-binary" class="mb-3"></div>
+        <div id="scripts" class="scripts  overflow-auto space-y-2"></div>
+      </div>
+
+    </section>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>
