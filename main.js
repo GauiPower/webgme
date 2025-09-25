@@ -8,18 +8,28 @@ const binaryTemplate = document.getElementById("binaries-template")
 let reader = new FileReader()
 
 let gmefile = null
-let filename = "newFile.gme"
+let gmefilename = "newFile.gme"
 
 
 // todo: audio upload | binaries up donw load switch gen | download gme
 // todo: gmelib change second media table only if set | return empty array, so .forEach allwas works
 
-document.getElementById("inputfile").addEventListener("change", (e) => {
-    filename = e.target.files[0].name
-    reader.readAsArrayBuffer(e.target.files[0])
-})
+const openGME = () => {
+    openFile((buffer, filename) => {
+        console.log("file", filename)
+        gmefilename = filename
+        gmefile = new GmeFile(buffer)
 
-const changeProductId = (e) => {
+        gmefile.mediaSegments.forEach(generateAudioElement)
+
+        document.getElementById("display").innerText = `Product Id: ${gmefile.productId} First used Oid: Last used Oid:`
+        document.getElementById("product-id").value = gmefile.productId
+
+        generateBinaries()
+    })
+}
+
+const changeProductId = () => {
     const productId = document.getElementById("product-id").value
     gmefile.changeProductId(productId)
 }
@@ -29,11 +39,21 @@ const clickAudio = (e) => {
 }
 
 const replaceBinary = (e) => {
-
+    alert("not implemented")
+    const gen = document.getElementById("processor-generation").value
+    openFile((buffer) => {
+        if (gen === "1") {
+            gmefile.replaceBinary(buffer, gmefile.game1binariesTable, gmefile.game1binariesTableOffset, e.index)
+        } else if (gen === "2n") {
+            gmefile.replaceBinary(buffer, gmefile.game2NbinariesTable, gmefile.game2NbinariesTableOffset, e.index)
+        } else if (gen === "3l") {
+            gmefile.replaceBinary(buffer, gmefile.game3LbinariesTable, gmefile.game3LbinariesTableOffset, e.index)
+        }
+    })
 }
 
 const replaceAudio = (e) => {
-    openFile().then((buffer) => {
+    openFile((buffer) => {
         gmefile.changeSmartMedia(buffer, e.number)
     })
 }
@@ -56,7 +76,6 @@ const downloadAudio = (e) => {
 }
 
 const downloadBinary = (e) => {
-    console.log(e)
     downloadFile(`${e.filename}`, gmefile.gmeFileBuffer.slice(e.offset, e.offset + e.size))
 }
 
@@ -86,47 +105,37 @@ const generateBinaryElement = (e) => {
 }
 
 
-function openFile() {
-    return new Promise((resolve, reee) => {
-        const input = document.createElement("input");
-        input.type = "file";
+function openFile(callback) {
+    const input = document.createElement("input");
+    input.type = "file";
+    let filename = "no_name"
 
-        input.onchange = async (event) => {
-            const file = event.target.files[0];
-            if (!file) {
-                console.log("no file selected")
-                return;
-            }
-            reader.readAsArrayBuffer(file);
+    input.onchange = async (event) => {
+        const file = event.target.files[0];
+        filename = file.name
+        if (!file) {
+            console.log("no file selected")
+            return;
         }
+        reader.readAsArrayBuffer(file);
+    }
 
-        const reader = new FileReader();
+    const reader = new FileReader();
 
-        reader.onloadend = () => {
-            console.log("Load end")
-            const buffer = new Uint8Array(reader.result);
-            resolve(Buffer.from(buffer));
-        };
+    reader.onloadend = () => {
+        console.log("Load end")
+        const buffer = new Uint8Array(reader.result);
+        callback(Buffer.from(buffer), filename);
+    };
 
-        reader.onerror = () => {
-            alert("error reading file")
-        };
+    reader.onerror = () => {
+        alert("error reading file")
+    };
 
-        input.click();
-    });
+    input.click();
+
 }
 
-reader.onloadend = (e) => {
-    gmefile = new GmeFile(Buffer.from(new Int8Array(e.target.result)))
-
-    gmefile.mediaSegments.forEach(generateAudioElement)
-
-    document.getElementById("display").innerText = `Product Id: ${gmefile.productId} First used Oid: Last used Oid:`
-    document.getElementById("product-id").value = gmefile.productId
-
-    generateBinaryElement(gmefile.main3LbinaryTable[0])
-    gmefile.game3LbinariesTable.forEach(generateBinaryElement)
-}
 
 const playAudio = (filebuffer) => {
     const blob = new Blob([filebuffer]);
@@ -137,8 +146,25 @@ const playAudio = (filebuffer) => {
 
 const downloadGME = () => {
     gmefile.writeMediaTable()
-    downloadFile(`edited${filename}`, gmefile.gmeFileBuffer)
+    downloadFile(`edited${gmefilename}`, gmefile.gmeFileBuffer)
+}
+
+const generateBinaries = () => {
+    const gen = document.getElementById("processor-generation").value
+    document.getElementById("binaries").innerHTML = ""
+    if (gen === "1") {
+        generateBinaryElement(gmefile.main1binaryTable[0])
+        gmefile.game1binariesTable.forEach(generateBinaryElement)
+    } else if (gen === "2n") {
+        generateBinaryElement(gmefile.main2NbinaryTable[0])
+        gmefile.game2NbinariesTable.forEach(generateBinaryElement)
+    } else if (gen === "3l") {
+        generateBinaryElement(gmefile.main3LbinaryTable[0])
+        gmefile.game3LbinariesTable.forEach(generateBinaryElement)
+    }
 }
 
 document.getElementById("product-id").onchange = changeProductId
 document.getElementById("download-gme").onclick = downloadGME
+document.getElementById("processor-generation").onchange = generateBinaries
+document.getElementById("open-button").onclick = openGME

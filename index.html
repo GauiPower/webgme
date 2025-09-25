@@ -20,12 +20,7 @@
         <label for="product-id" class="">Product Id</label>
         <input type="number" max="999" min="1" name="product-id" id="product-id" placeholder="Product Id"
           class="w-32 px-3 py-2 bg-white bg-opacity-90 text-black border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-900/70 transition" />
-
-        <!-- <button onclick="newfile" class="px-3 py-2 bg-emerald-900/70 hover:bg-emerald-900 rounded-md text-sm">New
-          File</button> -->
-        <label for="inputfile"
-          class="px-3 py-2 bg-emerald-900/70 hover:bg-emerald-900 rounded-md text-sm cursor-pointer">Choose File</label>
-        <input type="file" id="inputfile" class="sr-only" />
+        <button class="px-3 py-2 bg-emerald-900/70 hover:bg-emerald-900 rounded-md text-sm cursor-pointer" id="open-button">Open File</button>
         <button id="download-gme"
           class="px-3 py-2 bg-white text-emerald-700 rounded-md hover:bg-emerald-50 text-sm">Download GME</button>
       </div>
@@ -38,28 +33,6 @@
       <div class="bg-emerald-100/75 rounded-lg p-4">
         <h2 class="font-semibold text-lg text-emerald-700 mb-2">Audios</h2>
         <div id="audios" class="scrollable-list audios overflow-auto space-y-2">
-          <template id="audios-template">
-
-            <div data-id="buttontestdiv"
-              class="audio-element flex items-center justify-between gap-3 p-2 rounded-md hover:bg-emerald-50">
-              <div class="flex items-center gap-3 flex-1 min-w-0">
-                <button data-id="btn-play"
-                  class="flex-none aspect-square px-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  aria-label="Play">▶</button>
-                <p data-id="audios-text" class="text-emerald-700 truncate"></p>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <button
-                  class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                  data-id="btn-replace">Replace</button>
-                <button
-                  class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  data-id="btn-download">Download</button>
-              </div>
-            </div>
-
-          </template>
         </div>
       </div>
 
@@ -74,21 +47,6 @@
           </select>
         </div>
         <div id="binaries" class="scrollable-list binaries overflow-auto space-y-2">
-          <template id="binaries-template">
-
-            <div data-id="binary-div"
-              class="binary-element flex items-center justify-between gap-3 rounded-md hover:bg-emerald-50">
-              <div class="flex-1 min-w-0">
-                <p data-id="binary-name" class="text-emerald-700 truncate"></p>
-              </div>
-              <div class="flex items-center gap-2">
-                <button data-id="btn-replace"
-                  class="px-3 py-1 bg-white text-emerald-700 border border-emerald-200 rounded-md text-sm hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-300">Replace</button>
-                <button data-id="btn-download"
-                  class="px-3 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">Download</button>
-              </div>
-            </div>
-          </template>
         </div>
       </div>
 
@@ -100,6 +58,43 @@
 
     </section>
   </main>
+
+  <template id="audios-template">
+    <div data-id="buttontestdiv"
+      class="audio-element flex items-center justify-between gap-3 p-2 rounded-md hover:bg-emerald-50">
+      <div class="flex items-center gap-3 flex-1 min-w-0">
+        <button data-id="btn-play"
+          class="green-button aspect-square"
+          aria-label="Play">▶</button>
+        <p data-id="audios-text" class="text-emerald-700 truncate"></p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          class="button"
+          data-id="btn-replace">Replace</button>
+        <button
+          class="green-button"
+          data-id="btn-download">Download</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="binaries-template">
+    <div data-id="binary-div"
+      class="binary-element flex items-center justify-between gap-3 rounded-md hover:bg-emerald-50">
+      <div class="flex-1 min-w-0">
+        <p data-id="binary-name" class="text-emerald-700 truncate"></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button data-id="btn-replace"
+          class="button">Replace</button>
+        <button data-id="btn-download"
+          class="green-button">Download</button>
+      </div>
+    </div>
+  </template>
+
   <script type="module" src="main.js"></script>
 </body>
 

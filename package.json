@@ -15,7 +15,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "buffer": "^6.0.3",
-    "gmelib": "^0.2.3",
+    "gmelib": "^0.3.0",
     "tailwindcss": "^4.1.13"
   }
 }
