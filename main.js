@@ -162,7 +162,22 @@ const generateBinaries = () => {
 const generateAudioElement = (e) => {
     const clone = audioTemplate.content.cloneNode(true)
 
-    clone.querySelector("[data-id=btn-play").onclick = clickAudio.bind(null, e)
+    const playBtn = clone.querySelector("[data-id=btn-play")
+    let audioInstance = null
+    playBtn.onclick = () => {
+        if (!audioInstance || audioInstance.paused) {
+            audioInstance = new Audio(URL.createObjectURL(new Blob([gmefile.extractAudioFile(e.number)])))
+            playBtn.innerText = "⏸︎"
+            audioInstance.play()
+            audioInstance.onended = () => {
+                playBtn.innerText = "▶"
+                audioInstance = null
+            }
+        } else {
+            audioInstance.pause()
+            playBtn.innerText = "▶"
+        }
+    }
     clone.querySelector("[data-id=btn-download]").onclick = downloadAudio.bind(null, e)
     clone.querySelector("[data-id=btn-replace]").onclick = replaceAudio.bind(null, e)
     clone.querySelector("[data-id=audios-text]").innerText = e.number
